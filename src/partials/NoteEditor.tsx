@@ -15,6 +15,7 @@ export const NoteEditor: FC<NoteEditorProps> = (props) => {
   return (
     <div className="note editor">
       <textarea
+        maxLength={80}
         className="note-text"
         onKeyDown={onKeyDown}
         onChange={props.onChange}
