@@ -36,21 +36,19 @@ export const Pad: FC<PadProps> = (props) => {
   };
 
   return (
-    <div className="container">
-      <div className="pad">
-        <NoteEditor
-          onFocus={onNoteFocus}
-          value={value}
-          onChange={onNoteValueChange}
-          onEnter={createNote}
-        />
-        <Button onClick={createNote}> Share my note </Button>
-        <Button onClick={handleHighlight}>
-          {props.highlightMine ? 'Stop highlighting' : 'Highlight my notes'}
-        </Button>
-        {/* <Button onClick={props.clear}> Tidy up </Button> */}
-        <Username user={props.user} userCount={props.users.length}/>
-      </div>
+    <div className="pad">
+      <NoteEditor
+        onFocus={onNoteFocus}
+        value={value}
+        onChange={onNoteValueChange}
+        onEnter={createNote}
+      />
+      <Button onClick={createNote}> Share my note </Button>
+      <Button onClick={handleHighlight}>
+        {props.highlightMine ? 'Stop highlighting' : 'Highlight my notes'}
+      </Button>
+      {/* <Button onClick={props.clear}> Tidy up </Button> */}
+      <Username user={props.user} userCount={props.users.length}/>
     </div>
   );
 };

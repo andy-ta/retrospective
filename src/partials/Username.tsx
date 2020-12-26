@@ -12,7 +12,7 @@ interface UserNameProps {
 }
 
 export const Username: FC<UserNameProps> = (props) => (
-  <div className="userName">
+  <div className="username">
     <span>{props.user.name}</span>
     <span className="userCount">
       (with {props.userCount - 1} other{' '}

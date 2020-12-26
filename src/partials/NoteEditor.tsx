@@ -6,7 +6,8 @@ interface NoteEditorProps extends React.AllHTMLAttributes<HTMLTextAreaElement> {
 
 export const NoteEditor: FC<NoteEditorProps> = (props) => {
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.keyCode == 13 && !e.shiftKey) {
+    debugger;
+    if (e.key == 'Enter' && !e.shiftKey) {
       e.preventDefault();
       props.onEnter();
     }

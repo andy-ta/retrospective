@@ -38,7 +38,13 @@ export const Retrospective: FC<NoteroViewProps> = (props) => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
+      <Board
+        notes={state.notes}
+        vote={props.model.vote}
+        user={state.user}
+        highlightMine={highlightMine}
+      />
       <Pad
         createNote={props.model.createNote}
         demo={props.model.createDemoNote}
@@ -46,12 +52,6 @@ export const Retrospective: FC<NoteroViewProps> = (props) => {
         users={state.users}
         clear={() => alert('clear not implemented')}
         setHighlightMine={setHighlightMine}
-        highlightMine={highlightMine}
-      />
-      <Board
-        notes={state.notes}
-        vote={props.model.vote}
-        user={state.user}
         highlightMine={highlightMine}
       />
     </div>

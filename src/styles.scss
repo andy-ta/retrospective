@@ -83,7 +83,7 @@ body {
   height: 100%;
   overflow: hidden;
   border: none;
-  outline: 0px solid transparent;
+  outline: 0 solid transparent;
   background: transparent;
   resize: none;
 }
@@ -91,18 +91,16 @@ body {
 .theme {
   display: inline-block;
   padding: 0;
-  margin: 0;
   font-size: 1em;
   font-weight: bold;
-  display: inline-block;
   vertical-align: middle;
-  margin-left: auto;
+  margin: 0 0 0 auto;
   align-self: flex-end;
   width: fit-content;
   height: fit-content;
   overflow: hidden;
   border: none;
-  outline: 0px solid transparent;
+  outline: 0 solid transparent;
   color: #AAA;
 }
 
@@ -164,15 +162,26 @@ body {
 }
 
 .pad {
+  align-items: center;
+  background-color: #eee;
+  bottom: 0;
   display: flex;
   flex: 1;
   flex-wrap: wrap;
-  align-items: center;
-  background-color: #eee;
-  padding: .5em;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  margin-top: 1em;
+  padding: 1em;
+  position: sticky;
 }
 
-.userName {
+.container {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+.username {
   display: flex;
   position: absolute;
   right: .5em;
@@ -192,23 +201,33 @@ body {
   font-weight: normal;
   font-size: .7em;
   padding-left: .5em;
-
 }
 
 .board {
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: 1em;
   background-color: white;
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
-.container {
-  display: flex;
-  align-items: center;
-  background-color: #bbb;
-  margin: 1em;
+.left-board, .middle-board, .right-board {
+  h2 {
+    font-family: 'Indie Flower', cursive;
+  }
+  margin-top: 1em;
+  padding: 0 1em 0 1em;
+  text-align: center;
+}
+
+.left-board {
+  border-right: dashed 5px #41403E;
+}
+
+.middle-board {
+}
+
+.right-board {
+  border-left: dashed 5px #41403E;
 }
 
 .nav-wrapper {
