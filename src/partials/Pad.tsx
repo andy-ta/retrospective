@@ -3,9 +3,10 @@ import { IUser } from '../models/interfaces';
 import { NoteEditor } from './NoteEditor';
 import { Button } from './Button';
 import { Username } from './Username';
+import { NoteType } from '../models/note';
 
 interface PadProps {
-  createNote: (text: string) => void;
+  createNote: (text: string, type: NoteType) => void;
   demo: () => string;
   user: IUser;
   users: IUser[];
@@ -15,23 +16,36 @@ interface PadProps {
 }
 
 export const Pad: FC<PadProps> = (props) => {
-  const [value, setValue] = useState<string>('');
+  const [text, setText] = useState<string>('');
+  const [type, setType] = useState<NoteType>(NoteType.Well);
 
   const createNote = () => {
-    props.createNote(value);
-    setValue('');
+    props.createNote(text, type);
+    setText('');
   };
   const handleHighlight = () => {
     props.setHighlightMine(!props.highlightMine);
   };
 
-  const onNoteValueChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value);
+  const onNoteTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setText(e.target.value);
   };
 
+  const onNoteTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    let noteType = NoteType.Well;
+
+    if (e.target.value === '1') {
+      noteType = NoteType.NotWell;
+    } else if (e.target.value === '2') {
+      noteType = NoteType.Improve;
+    }
+
+    setType(noteType);
+  }
+
   const onNoteFocus = () => {
-    if (!value.length) {
-      setValue(props.demo());
+    if (!text.length) {
+      setText(props.demo());
     }
   };
 
@@ -39,15 +53,19 @@ export const Pad: FC<PadProps> = (props) => {
     <div className="pad">
       <NoteEditor
         onFocus={onNoteFocus}
-        value={value}
-        onChange={onNoteValueChange}
+        value={text}
+        onChange={onNoteTextChange}
         onEnter={createNote}
       />
-      <Button onClick={createNote}> Share my note </Button>
+      <select value={type} onChange={onNoteTypeChange}>
+        <option value="0">What went well</option>
+        <option value="1">What didn't go so well</option>
+        <option value="2">What can we improve</option>
+      </select>
+      <Button onClick={createNote}>Share my note</Button>
       <Button onClick={handleHighlight}>
         {props.highlightMine ? 'Stop highlighting' : 'Highlight my notes'}
       </Button>
-      {/* <Button onClick={props.clear}> Tidy up </Button> */}
       <Username user={props.user} userCount={props.users.length}/>
     </div>
   );

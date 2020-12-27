@@ -4,7 +4,7 @@ import { SharedMap } from '@fluidframework/map';
 import { v4 as uuidv4 } from 'uuid';
 
 import { IBallot, INote, INoteDataModel, IUser, } from '../models/interfaces';
-import { Note } from '../models/note';
+import { Note, NoteType } from '../models/note';
 import { AutoNote, FakeUser } from './demo';
 
 export class Notero extends DataObject implements INoteDataModel {
@@ -33,14 +33,15 @@ export class Notero extends DataObject implements INoteDataModel {
   /*
    * Creates a note and adds it to the notesMap SharedMap
    */
-  public createNote = (text: string): void => {
+  public createNote = (text: string, type: NoteType): void => {
     if (text) {
       const note: INote = {
         id: uuidv4(),
-        text: text,
+        text,
         user: this.getUser(),
         votes: 0,
-        currentUserVoted: false
+        currentUserVoted: false,
+        type
       };
       this.notesMap.set(note.id, note);
     }

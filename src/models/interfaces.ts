@@ -1,9 +1,12 @@
+import { NoteType } from './note';
+
 export interface INote {
   id: string;
   text: string;
   user: IUser;
   currentUserVoted: boolean;
   votes: number;
+  type: NoteType;
 }
 
 export interface IUser {
@@ -23,7 +26,7 @@ export interface INoteDataModel {
   addUser: () => void;
   getNotesFromBoard: () => INote[];
   createDemoNote: () => string;
-  createNote: (text: string) => void;
+  createNote: (text: string, type: NoteType) => void;
   vote: (note: INote) => void;
 
   on(event: 'change', listener: () => void): this;
