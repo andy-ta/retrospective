@@ -14,15 +14,6 @@ To run this follow the steps below:
 2. Run `yarn start` to start both the client and server
 3. Navigate to `http://localhost:8080` in a browser tab
 
-## Data model
-
-Brainstorm uses the following distributed data structures:
-
-- SharedDirectory - root
-- SharedMap - storing note information
-- SharedMap - storing vote information
-- SharedMap - storing user information
-
 ## Available Scripts
 
 ### `build`

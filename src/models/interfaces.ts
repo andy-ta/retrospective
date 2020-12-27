@@ -11,6 +11,7 @@ export interface INote {
 
 export interface IUser {
   id: string;
+  sessionCount: number;
 }
 
 export interface IBallot {
@@ -23,6 +24,7 @@ export interface INoteDataModel {
   getUsers: () => IUser[];
   getUser: () => IUser;
   addUser: () => void;
+  removeUser: () => void;
   getNotesFromBoard: () => INote[];
   createNote: (text: string, type: NoteType) => void;
   vote: (note: INote) => void;

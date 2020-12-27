@@ -23,12 +23,21 @@ export const Retrospective: FC<NoteroViewProps> = (props) => {
       notes: props.model.getNotesFromBoard(),
     };
   };
+  const removeUser = () => {
+    props.model.removeUser();
+  }
   const [state, setState] = useState<NoteroViewState>(generateState());
   const [highlightMine, setHighlightMine] = useState<boolean>();
 
   useEffect(() => {
     const onChange = () => setState(generateState());
     props.model.on('change', onChange);
+
+    // Clean up the user's session.
+    window.addEventListener("beforeunload", (e) => {
+      e.preventDefault();
+      return removeUser();
+    });
 
     onChange();
     return () => {

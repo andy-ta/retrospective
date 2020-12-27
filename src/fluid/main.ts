@@ -74,18 +74,34 @@ export class Notero extends DataObject implements INoteDataModel {
   };
 
   public addUser = (): void => {
+    // Check if the user has a session.
     if (sessionStorage.getItem('userId') &&
       this.usersMap.get<IUser>(sessionStorage.getItem('userId'))) {
       this.userId = sessionStorage.getItem('userId');
+      const user = this.usersMap.get<IUser>(this.userId);
+      user.sessionCount++;
+      this.usersMap.set(user.id, user);
     } else {
       const user: IUser = {
-        id: uuidv4()
+        id: uuidv4(),
+        sessionCount: 1
       };
       this.userId = user.id;
       sessionStorage.setItem('userId', user.id);
       this.usersMap.set(user.id, user);
     }
   };
+
+  public removeUser = (): void => {
+    const user = this.usersMap.get<IUser>(this.userId);
+    // Is the user's last session?
+    if (user.sessionCount <= 1) {
+      this.usersMap.delete(this.userId);
+    } else {
+      user.sessionCount--;
+      this.usersMap.set(this.userId, user);
+    }
+  }
 
   public getUser = (): IUser => {
     return this.usersMap.get<IUser>(this.userId);
