@@ -7,7 +7,6 @@ import { NoteType } from '../models/note';
 
 interface PadProps {
   createNote: (text: string, type: NoteType) => void;
-  demo: () => string;
   user: IUser;
   users: IUser[];
   clear: () => void;
@@ -43,16 +42,9 @@ export const Pad: FC<PadProps> = (props) => {
     setType(noteType);
   }
 
-  const onNoteFocus = () => {
-    if (!text.length) {
-      setText(props.demo());
-    }
-  };
-
   return (
     <div className="pad">
       <NoteEditor
-        onFocus={onNoteFocus}
         value={text}
         onChange={onNoteTextChange}
         onEnter={createNote}

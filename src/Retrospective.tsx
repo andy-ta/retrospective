@@ -32,7 +32,6 @@ export const Retrospective: FC<NoteroViewProps> = (props) => {
 
     onChange();
     return () => {
-      // When the view dismounts remove the listener to avoid memory leaks
       props.model.off('change', onChange);
     };
   }, []);
@@ -47,7 +46,6 @@ export const Retrospective: FC<NoteroViewProps> = (props) => {
       />
       <Pad
         createNote={props.model.createNote}
-        demo={props.model.createDemoNote}
         user={state.user}
         users={state.users}
         clear={() => alert('clear not implemented')}

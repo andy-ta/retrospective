@@ -162,25 +162,17 @@ body {
 }
 
 .username {
+  background: white;
+  border: solid #ccc;
+  border-radius: 0.3em;
+  box-shadow: 0 0.4em 0.6em rgba(0, 0, 0, 0.15);
   display: flex;
+  font-size: 1em;
+  padding: .2em .5em .2em .5em;
   position: absolute;
   right: .5em;
   top: .5em;
-  z-index: 999;
-  box-shadow: 0 0.4em 0.6em rgba(0, 0, 0, 0.15);
-  font-weight: bold;
-  padding: .2em .5em .2em .5em;
-  background: white;
-  border-radius: 0.3em;
-  font-size: 1em;
-  border: solid #ccc;
-  align-items: baseline;
-}
-
-.userCount {
-  font-weight: normal;
-  font-size: .7em;
-  padding-left: .5em;
+  white-space: pre-wrap;
 }
 
 .board {

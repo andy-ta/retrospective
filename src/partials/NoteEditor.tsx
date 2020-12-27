@@ -21,7 +21,6 @@ export const NoteEditor: FC<NoteEditorProps> = (props) => {
         onKeyDown={onKeyDown}
         onChange={props.onChange}
         value={props.value}
-        onFocus={props.onFocus}
       />
     </div>
   );

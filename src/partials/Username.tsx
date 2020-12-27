@@ -6,17 +6,14 @@
 import React, { FC } from 'react';
 import { IUser } from '../models/interfaces';
 
-interface UserNameProps {
+interface UserProps {
   user: IUser;
   userCount: number;
 }
 
-export const Username: FC<UserNameProps> = (props) => (
+export const Username: FC<UserProps> = (props) => (
   <div className="username">
-    <span>{props.user.name}</span>
-    <span className="userCount">
-      (with {props.userCount - 1} other{' '}
-      {props.userCount == 2 ? 'person' : 'people'})
-    </span>
+    With <b>{props.userCount - 1}</b> other{' '}
+    {props.userCount == 2 ? 'person' : 'people'}
   </div>
 );
