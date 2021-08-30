@@ -1,8 +1,39 @@
 @import url('https://fonts.googleapis.com/css?family=Indie%20Flower');
-
 body {
   background-color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#loader-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  .loader {
+    top: calc(50% - 4em);
+    left: calc(50% - 4em);
+    width: 6em;
+    height: 6em;
+    border: 1.1em solid rgba(0, 0, 0, 0.2);
+    border-left: 1.1em solid #000000;
+    border-radius: 50%;
+    animation: load8 1.1s infinite linear;
+    transition: opacity 0.3s;
+  }
+}
+
+.display-none {
+  display: none;
+}
+
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .note {
@@ -125,7 +156,8 @@ body {
   user-select: none;
 }
 
-.button:hover, .button:focus {
+.button:hover,
+.button:focus {
   background: #0053ba;
 }
 
@@ -182,7 +214,9 @@ body {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.left-board, .middle-board, .right-board {
+.left-board,
+.middle-board,
+.right-board {
   h2 {
     font-family: 'Indie Flower', cursive;
   }
@@ -195,8 +229,7 @@ body {
   border-right: dashed 5px #41403E;
 }
 
-.middle-board {
-}
+.middle-board {}
 
 .right-board {
   border-left: dashed 5px #41403E;
