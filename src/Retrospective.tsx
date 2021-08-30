@@ -50,6 +50,7 @@ export const Retrospective: FC<NoteroViewProps> = (props) => {
       <Board
         notes={state.notes}
         vote={props.model.vote}
+        delete={props.model.delete}
         user={state.user}
         highlightMine={highlightMine}
       />

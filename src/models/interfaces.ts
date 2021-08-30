@@ -28,6 +28,7 @@ export interface INoteDataModel {
   getNotesFromBoard: () => INote[];
   createNote: (text: string, type: NoteType) => void;
   vote: (note: INote) => void;
+  delete: (note: INote) => void;
 
   on(event: 'change', listener: () => void): this;
 
