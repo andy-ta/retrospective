@@ -6,6 +6,7 @@ import { NoteType } from '../models/note';
 interface BoardProps {
   notes: INote[];
   vote: (note: INote) => void;
+  delete: (note: INote) => void;
   user: IUser;
   highlightMine: boolean;
 }
@@ -18,6 +19,7 @@ export const Board: FC<BoardProps> = (props) => {
         key={note.id}
         note={note}
         onClick={() => props.vote(note)}
+        onDelete={() => props.delete(note)}
         count={note.votes}
         user={props.user}
         highlightMine={props.highlightMine}

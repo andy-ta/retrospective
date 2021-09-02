@@ -4,6 +4,9 @@
   "description": "Collaborative sticky notes for sprint retrospectives.",
   "license": "MIT",
   "author": "andy-ta",
+  "contributors": [
+    "RiadGahlouz"
+  ],
   "main": "dist/index.js",
   "module": "lib/index.js",
   "types": "dist/index.d.ts",

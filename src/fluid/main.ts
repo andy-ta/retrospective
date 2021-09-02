@@ -55,6 +55,18 @@ export class Notero extends DataObject implements INoteDataModel {
     }
   };
 
+  public delete = (note: INote): void => {
+    const user = this.getUser();
+
+    if (note.user.id != user.id){
+      return;
+    }
+
+    if (this.notesMap.has(note.id)) {
+      this.notesMap.delete(note.id);
+    }
+  };
+
   public getNotesFromBoard = (): Note[] => {
 
     let notes: Note[] = [];
