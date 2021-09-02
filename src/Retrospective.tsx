@@ -16,6 +16,9 @@ interface NoteroViewState {
 }
 
 export const Retrospective: FC<NoteroViewProps> = (props) => {
+  const loader = document.querySelector('#loader-container');
+  const hideLoader = () => loader.remove();
+
   const generateState = () => {
     return {
       user: props.model.getUser(),
@@ -40,6 +43,8 @@ export const Retrospective: FC<NoteroViewProps> = (props) => {
     });
 
     onChange();
+    hideLoader();
+
     return () => {
       props.model.off('change', onChange);
     };
