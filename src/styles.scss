@@ -47,7 +47,7 @@ body {
   width: 10em;
   height: 10em;
   background-color: #ffc;
-  box-shadow: 0.1em 0.2em 0.4em rgba(0, 0, 0, 0.15);
+  box-shadow: -6px -6px 0.8em -10px rgba(0, 0, 0, 0.15);
   margin: .5em;
   cursor: pointer;
   user-select: none;
@@ -73,14 +73,40 @@ body {
   top: -.4em;
 }
 
-.note:hover {
-  box-shadow: 0 0.4em 0.8em rgba(0, 0, 0, 0.15);
-  background: #ffc;
+.note:not(:first-child):hover:before {
+  content: "";
+  position: absolute;
+  border-top: 50px solid #aaaa72;
+  border-right: 50px solid white;
+  bottom: 0;
+  height: 1px;
+  right: 0;
+  box-shadow: -8px -8px 10px -8px rgba(0, 0, 0, 0.2);
+}
+
+.note:not(:first-child):hover:after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 50px;
+  background-color: white;
+  bottom: 0;
+  right: -1px;
+}
+
+.note-icon-delete {
+  position: absolute;
+  background-color: transparent;
+  bottom: 0;
+  right: 0;
+  height: 50px;
+  width: 50px;
+  z-index: 999;
 }
 
 .note:focus {
   outline: none;
-  box-shadow: 0 0.4em 0.8em rgba(0, 0, 0, 0.35);
+  box-shadow: -6px -6px 0.8em -10px rgba(0, 0, 0, 0.3);
 }
 
 .note.placeholder {
@@ -97,7 +123,7 @@ body {
 }
 
 .note.editor:hover {
-  box-shadow: 0 0.4em 0.6em rgba(0, 0, 0, 0.15);
+  box-shadow: -6px -6px 0.8em -10px rgba(0, 0, 0, 0.3);
 }
 
 .note-text {
@@ -131,25 +157,6 @@ body {
   z-index: 999;
   box-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.15);
   border: solid green .2em;
-}
-
-.note-icon-delete {
-  display: inline-block;
-  min-width: 1.4em;
-  padding: 0 0 .1em 0;
-  border-radius: 50%;
-  font-size: .6em;
-  font-weight: bold;
-  text-align: center;
-  background: red;
-  color: white;
-  position: absolute;
-  right: -0.5em;
-  font-size: medium;
-  top: -0.25em;
-  z-index: 999;
-  box-shadow: 0 0.1em 0.2em rgba(0, 0, 0, 0.15);
-  border: solid red .2em;
 }
 
 .note-badge.voted {

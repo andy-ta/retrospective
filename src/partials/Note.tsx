@@ -23,11 +23,10 @@ export const Note: FC<NoteProps> = (props) => {
       className={noteClassName}
       onClick={props.onClick}>
       {isUserNote && (
-        <span
+        <div
           className='note-icon-delete'
           onClick={(evt) => {evt.stopPropagation(); props.onDelete(evt);}}>
-          X
-        </span>
+        </div>
       )}
       {props.count > 0 && (
         <span
