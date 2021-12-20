@@ -1,8 +1,7 @@
 import {
   Text,
   CommandBar,
-  ICommandBarItemProps,
-  Facepile,
+  ICommandBarItemProps, Theme, Link,
 } from "@fluentui/react";
 import { AzureMember } from "@fluidframework/azure-client";
 import React from "react";
@@ -11,6 +10,7 @@ import { DefaultColor } from "./Color";
 import { ColorPicker } from "./ColorPicker";
 import { NoteData } from "../Types";
 import { NOTE_SIZE } from "./Note.style";
+import { ThemeName, themeNameToTheme } from './Themes';
 
 function uuidv4() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
@@ -23,12 +23,13 @@ export interface HeaderProps {
   model: RetrospectiveModel;
   author: AzureMember;
   members: AzureMember[];
+  setTheme: (theme: Theme) => void
 }
 
 export function Header(props: HeaderProps) {
   const colorButtonRef = React.useRef<any>();
   const [color, setColor] = React.useState(DefaultColor);
-  const personas = React.useMemo(() => props.members.map(member => {return { personaName: member.userName}}), [props.members]);
+  const setTheme = props.setTheme;
 
   // add in all the default attributes needed for a new note, including setting the last edited author as the
   // user (since user created the note).
@@ -50,6 +51,10 @@ export function Header(props: HeaderProps) {
     props.model.SetNote(id, newCardData);
   };
 
+  const onSetTheme = (theme: ThemeName) => {
+    setTheme(themeNameToTheme(theme));
+  }
+
   const items: ICommandBarItemProps[] = [
     {
       key: "title",
@@ -67,10 +72,16 @@ export function Header(props: HeaderProps) {
     {
       key: "add",
       text: "Add note",
-      onClick: onAddNote,
       iconProps: {
         iconName: "QuickNote",
       },
+      subMenuProps: {
+        items: [
+          { key: "whatwentwell", text: "What went well", onClick: onAddNote },
+          { key: "whatdidntgosowell", text: "What didn't go so well", onClick: onAddNote },
+          { key: "whatcanweimprove", text: "What can we improve", onClick: onAddNote },
+        ],
+      }
     },
     {
       componentRef: colorButtonRef,
@@ -91,20 +102,51 @@ export function Header(props: HeaderProps) {
         ),
       },
     },
+    {
+      key: "theme",
+      text: "Theme",
+      iconProps: {
+        iconName: "Sunny",
+      },
+      subMenuProps: {
+        items: [
+          { key: "lighttheme", text: "Light Theme", onClick: () => onSetTheme("default")},
+          { key: "darktheme", text: "Dark Theme", onClick: () => onSetTheme("dark")},
+        ],
+      }
+    },
   ];
 
   const farItems: ICommandBarItemProps[] = [
     {
       key: "presence",
-      onRender: () => <Facepile
-      styles={{ root: { alignSelf: "center" } }}
-      personas={personas}
-    />,
+      onRender: () => (
+        <Text
+          styles={{
+            root: { alignSelf: "center", marginRight: 16 },
+          }}
+        >
+          With <strong>{ props.members.length - 1 }</strong> other { props.members.length - 1 === 1 ? 'person' : 'people' }
+        </Text>
+      ),
     },
+    {
+      key: 'ko-fi',
+      onRender: () => (
+        <Link
+          href="https://ko-fi.com/A0A87FYC1"
+          target='_blank'
+          styles={{
+            root: { alignSelf: "center", marginRight: 16 },
+          }}>
+          Buy Me a Coffee
+        </Link>
+      )
+    }
   ];
   return (
     <CommandBar
-      styles={{ root: { paddingLeft: 0 } }}
+      styles={{ root: { padding: '5px' } }}
       items={items}
       farItems={farItems}
     />

@@ -1,13 +1,12 @@
-import { initializeIcons, ThemeProvider } from "@fluentui/react";
+import { initializeIcons } from "@fluentui/react";
 import { AzureClient, AzureContainerServices } from '@fluidframework/azure-client';
 import { IFluidContainer } from "fluid-framework";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { RetrospectiveView } from './view/RetrospectiveView';
 import "./view/index.css"
 import "./view/App.css";
-import { themeNameToTheme } from './view/Themes';
 import { connectionConfig, containerSchema } from "./Config";
+import { ThemeWrapper } from './view/ThemeWrapper';
 
 export async function start() {
   initializeIcons();
@@ -46,9 +45,7 @@ export async function start() {
 
   ReactDOM.render(
     <React.StrictMode>
-      <ThemeProvider theme={themeNameToTheme("default")}>
-        <RetrospectiveView container={container} services={services} />
-      </ThemeProvider>
+      <ThemeWrapper container={container} services={services} />
     </React.StrictMode>,
     document.getElementById('root')
   );

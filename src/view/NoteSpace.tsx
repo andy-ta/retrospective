@@ -1,21 +1,21 @@
-import { IStyle, mergeStyles, ThemeProvider } from "@fluentui/react";
+import { IStyle, mergeStyles, Text, Theme, ThemeProvider } from "@fluentui/react";
 import { AzureMember } from "@fluidframework/azure-client";
 import React from "react";
 import { useDrop } from 'react-dnd';
 import { NoteData, Position } from "../Types";
 import { Note } from "./Note";
 import { RetrospectiveModel } from "../RetrospectiveModel";
-import { lightTheme } from "./Themes";
+import { lightTheme } from './Themes';
 
 export type NoteSpaceProps = Readonly<{
-  model: RetrospectiveModel;
   author: AzureMember;
+  model: RetrospectiveModel;
+  theme: Theme
 }>;
 
 export function NoteSpace(props: NoteSpaceProps) {
   const { model } = props;
   const [notes, setNotes] = React.useState<readonly NoteData[]>([]);
-  const [time, setTime] = React.useState(Date.now());
 
   // This runs when model changes whether initiated by user or from external
   React.useEffect(() => {
@@ -30,21 +30,6 @@ export function NoteSpace(props: NoteSpaceProps) {
       setNotes(noteDataArr);
     };
 
-    // Use SetInterval to trigger useEffect() every 3 secs and refresh the note states.
-    // This allows the last edited author name to be updated when there is no more edits
-    // to trigger refreshing the view.
-
-    // Note: We are aware that this probably isn't the most optimal and intuitive
-    // solution for a feature like this, in fact, there is actually a
-    // last edited package (https://github.com/microsoft/FluidFramework/blob/main/experimental/framework/last-edited/README.md)
-    // within Fluid Framework that helps us achieve this task. However, for the purpose
-    // of demonstration and what we can use the `audience` propety to achieve, we think
-    // the implementation of this feature is justified. We are also planning on refactoring
-    // the app to allow for an easier experience when updating both local and remote states.
-    setInterval(() => {
-      setTime(Date.now());
-    }, 3000);
-
     syncLocalAndFluidState();
 
     // Add a listener on the RetrospectiveModel listener
@@ -54,15 +39,15 @@ export function NoteSpace(props: NoteSpaceProps) {
     return () => {
       model.removeChangeListener(syncLocalAndFluidState);
     }
-  }, [model, props.author, time]);
+  }, [model, props.author]);
 
   const rootStyle: IStyle = {
-    flexGrow: 1,
-    position: "relative",
-    margin: "10px",
     borderRadius: "2px",
+    display: "flex",
+    height: "100vh",
+    margin: "10px",
+    position: "relative"
   };
-
   const spaceClass = mergeStyles(rootStyle);
 
   const [, drop] = useDrop(() => ({
@@ -80,8 +65,17 @@ export function NoteSpace(props: NoteSpaceProps) {
   }), [model]);
 
   return (
-    <div id="NoteSpace" ref={drop} className={spaceClass}>
-      <ThemeProvider theme={lightTheme}>
+    <div className={spaceClass}>
+      <div className="leftBoard">
+        <Text variant="xLarge">What went well?</Text>
+      </div>
+      <div className="middleBoard">
+        <Text variant="xLarge">What went wrong?</Text>
+      </div>
+      <div className="rightBoard">
+        <Text variant="xLarge">What can we improve?</Text>
+      </div>
+      <ThemeProvider theme={lightTheme} id="NoteSpace" ref={drop}>
         {notes.map((note, i) => {
           const setPosition = (position: Position) => {
             model.MoveNote(note.id, position);
@@ -124,7 +118,7 @@ export function NoteSpace(props: NoteSpaceProps) {
               setText={setText}
             />
           );
-        })}
+          })}
       </ThemeProvider>
     </div>
   );

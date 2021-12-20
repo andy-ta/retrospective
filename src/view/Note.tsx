@@ -37,8 +37,6 @@ export type NoteProps = Readonly<{
 export function Note(props: NoteProps) {
   const {
     id,
-    currentUser,
-    lastEdited,
     position: { x: left, y: top },
     color = DefaultColor,
     setText,
@@ -55,11 +53,35 @@ export function Note(props: NoteProps) {
 
   const rootClass = mergeStyles(getRootStyleForColor(color));
 
+  // hash the id then use it as a seed to pick a random rotation
+  const getRotation = (noteId: string): string => {
+    const choices = ["rotate(0deg)", "rotate(2deg)", "rotate(3deg)", "rotate(-2deg)", "rotate(-3deg)"];
+    let hash = 0, i, chr;
+    if (noteId.length === 0) return choices[0];
+    for (i = 0; i < noteId.length; i++) {
+      chr   = noteId.charCodeAt(i);
+      hash  = ((hash << 5) - hash) + chr;
+      hash |= 0; // Convert to 32bit integer
+    }
+    // mulberry32
+    let t = hash + 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    const random = ((t ^ t >>> 14) >>> 0) / 4294967296;
+    return choices[Math.floor(random * choices.length)];
+  }
+
+  const styles = {
+    left,
+    top,
+    transform: getRotation(id)
+  }
+
   return (
-    <div className={rootClass} ref={drag} style={{ left, top }}>
+    <div className={rootClass} ref={drag} style={styles}>
       <NoteHeader {...props} />
       <NoteBody setText={setText} text={text} color={color} />
-      <NoteFooter currentUser={currentUser} lastEdited={lastEdited} />
+      <NoteFooter />
     </div>
   );
 }

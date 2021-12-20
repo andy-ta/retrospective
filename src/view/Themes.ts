@@ -2,28 +2,6 @@ import { createTheme } from "@fluentui/react";
 
 export type ThemeName = "default" | "dark" | "contrast";
 
-export function normalizeThemeName(theme?: string): ThemeName {
-  switch (theme) {
-    case "dark":
-      return "dark";
-    case "contrast":
-      return "contrast";
-    default:
-      return "default";
-  }
-}
-
-export function themeNameToTheme(themeName: ThemeName) {
-  switch (themeName) {
-    case "default":
-      return lightTheme;
-    case "dark":
-      return darkTheme;
-    case "contrast":
-      return darkTheme;
-  }
-}
-
 export const lightTheme = createTheme({
   palette: {
     themePrimary: "#6264a7",
@@ -78,3 +56,16 @@ export const darkTheme = createTheme({
     white: "#000000",
   },
 });
+
+export function themeNameToTheme(themeName: ThemeName) {
+  switch (themeName) {
+    case "default":
+      return lightTheme;
+    case "dark":
+      return darkTheme;
+    default:
+      return lightTheme;
+  }
+}
+
+export const DefaultTheme = themeNameToTheme("default");

@@ -20,5 +20,9 @@ h2 {
 }
 
 #NoteSpace {
-  height: 100vh
+  background: transparent;
+  height: 98%;
+  margin-top: 1%;
+  position: absolute;
+  width: 100%;
 }
