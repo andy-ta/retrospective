@@ -1,66 +1,39 @@
 # Retrospective
 
-Retrospective is an application for sprint retrospective collaborative sticky notes.
+Retrospective is an application for doing sprint retrospective collaborative sticky notes virtually.
 
-It is based of an example by Microsoft on using the Fluid Framework to build a collaborative 
-line of business application. You can find the example
-[here](https://github.com/microsoft/FluidExamples/tree/main/brainstorm).
+It is based off of [Brainstorm](https://github.com/microsoft/FluidExamples/tree/main/brainstorm) by Microsoft 
+as an example on using the Fluid Framework to build a collaborative line of business application.
 
-## Getting Started
+## Usage
 
-To run this follow the steps below:
+Head over to https://retrospective.andyta.me, then copy and paste the generated browser url to your Agile team.
 
-1. Run `yarn install` from the brainstorm folder root
-2. Run `yarn start` to start both the client and server
-3. Navigate to `http://localhost:8080` in a browser tab
+## Development
+### Getting Started
 
-## Available Scripts
+Follow the steps below to run this in local mode (Azure local service):
 
-### `build`
+1. Run `npm install` from the folder root
+2. Run `npx @fluidframework/azure-local-service@latest` to start the Azure local service for testing and development
+3. Run `npm run start` to start the client
+4. Navigate to `http://localhost:3000` in a browser tab
 
-```bash
-yarn build
-```
+Follow the steps below to run this in remote mode (Routerlicious):
 
-Runs [`tsc`](###-tsc) and [`webpack`](###-webpack) and outputs the results in `./dist`.
+1. Run `npm install` from the folder root
+2. Run `npm run start:azure` to connect to the Azure Fluid Relay service
+3. Navigate to `http://localhost:3000` in a browser tab
 
-### `start`
+### Using Retrospective
 
-```bash
-yarn start
-```
+1. Navigate to `http://localhost:3000`
 
-Runs both [`start:client`](###-start:client) and [`start:server`](###-start:server).
+You'll be taken to a url similar to `http://localhost:3000/**#1621961220840**` the path `#1621961220840` specifies one retrospective session.
 
-### `start:client`
+2. Navigate to the same url in another window or tab
 
-```bash
-yarn start:all
-```
-
-Uses `webpack-dev-server` to start a local webserver that will host your webpack file.
-
-Once you run `start` you can navigate to `http://localhost:8080` in any browser window to use your fluid example.
-
-> The Tinylicious Fluid server must be running. See [`start:server`](###-start:server) below.
-
-### `start:server`
-
-```bash
-yarn start:server
-```
-
-Starts an instance of the Tinylicious Fluid server running locally at `http://localhost:3000`.
-
-> Tinylicious only needs to be running once on a machine and can support multiple examples.
-
-### `tsc`
-
-Compiles the TypeScript code. Output is written to the `./dist` folder.
-
-### `webpack`
-
-Compiles and webpacks the TypeScript code. Output is written to the `./dist` folder.
+Now you can create notes, write text, change colors and more!
 
 ## License
 

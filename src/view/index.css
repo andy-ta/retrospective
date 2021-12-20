@@ -1,0 +1,42 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.rootContent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.rootContent > div {
+  height: 100%;
+}
+
+.noteSpace {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 1em;
+}
+
+.board {
+  display: flex;
+  height: 100vh;
+  position: relative;
+}
+
+.column {
+  flex: 1 1 30%;
+  text-align: center;
+}
+
+.leftColumn {
+  border-right: dashed 3px #41403E;
+}
+
+.rightColumn {
+  border-left: dashed 3px #41403E;
+}
