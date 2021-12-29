@@ -47,10 +47,11 @@ export function getRootStyleForColor(color: ColorId): IStyle {
     borderRadius: "2px",
     boxShadow:
       "rgb(0 0 0 / 13%) 0px 1.6px 3.6px 0px, rgb(0 0 0 / 11%) 0px 0.3px 0.9px 0px",
-    fontFamily: "'Indie Flower', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    flexShrink: 0,
+    display: "inline-block",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     minHeight: NOTE_SIZE.height,
-    position: "absolute",
-    width: NOTE_SIZE.width
+    minWidth: NOTE_SIZE.width
   };
 }
 

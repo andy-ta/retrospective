@@ -37,7 +37,7 @@ export type NoteProps = Readonly<{
 export function Note(props: NoteProps) {
   const {
     id,
-    position: { x: left, y: top },
+    position,
     color = DefaultColor,
     setText,
     text
@@ -46,9 +46,9 @@ export function Note(props: NoteProps) {
   const [, drag] = useDrag(
     () => ({
       type: "note",
-      item: { id, left, top },
+      item: { id, position },
     }),
-    [id, left, top]
+    [id, position]
   );
 
   const rootClass = mergeStyles(getRootStyleForColor(color));
@@ -72,8 +72,6 @@ export function Note(props: NoteProps) {
   }
 
   const styles = {
-    left,
-    top,
     transform: getRotation(id)
   }
 

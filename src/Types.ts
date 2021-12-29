@@ -1,6 +1,6 @@
 import { AzureMember } from "@fluidframework/azure-client";
 
-export type Position = Readonly<{ x: number; y: number }>;
+export type Position = "left" | "middle" | "right";
 
 export type NoteData = Readonly<{
   id: any;

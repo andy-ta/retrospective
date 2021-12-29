@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Indie%20Flower');
-
 body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -16,21 +15,28 @@ body {
   height: 100%;
 }
 
-.leftBoard,
-.middleBoard,
-.rightBoard {
-  font-family: 'Indie Flower', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-  padding: 0 1em 0 1em;
-  text-align: center;
-  width: 100%;
+.noteSpace {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: 1em;
 }
 
-.leftBoard {
+.board {
+  display: flex;
+  height: 100vh;
+  position: relative;
+}
+
+.column {
+  flex: 1 1 30%;
+  text-align: center;
+}
+
+.leftColumn {
   border-right: dashed 3px #41403E;
 }
 
-.middleBoard {}
-
-.rightBoard {
+.rightColumn {
   border-left: dashed 3px #41403E;
 }

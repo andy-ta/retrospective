@@ -18,11 +18,3 @@ h2 {
 .Error {
   color: red;
 }
-
-#NoteSpace {
-  background: transparent;
-  height: 98%;
-  margin-top: 1%;
-  position: absolute;
-  width: 100%;
-}

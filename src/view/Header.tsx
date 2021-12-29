@@ -8,8 +8,7 @@ import React from "react";
 import { RetrospectiveModel } from "../RetrospectiveModel";
 import { DefaultColor } from "./Color";
 import { ColorPicker } from "./ColorPicker";
-import { NoteData } from "../Types";
-import { NOTE_SIZE } from "./Note.style";
+import { NoteData, Position } from "../Types";
 import { ThemeName, themeNameToTheme } from './Themes';
 
 function uuidv4() {
@@ -33,15 +32,11 @@ export function Header(props: HeaderProps) {
 
   // add in all the default attributes needed for a new note, including setting the last edited author as the
   // user (since user created the note).
-  const onAddNote = () => {
-    const { scrollHeight, scrollWidth } = document.getElementById("NoteSpace")!;
+  const onAddNote = (position: Position) => {
     const id = uuidv4();
     const newCardData: NoteData = {
       id,
-      position: {
-        x: Math.floor(Math.random() * (scrollWidth - NOTE_SIZE.width)),
-        y: Math.floor(Math.random() * (scrollHeight - NOTE_SIZE.height)),
-      },
+      position,
       lastEdited: { userId: props.author.userId, userName: props.author.userName, time: Date.now() },
       author: props.author,
       numLikesCalculated: 0,
@@ -77,9 +72,9 @@ export function Header(props: HeaderProps) {
       },
       subMenuProps: {
         items: [
-          { key: "whatwentwell", text: "What went well", onClick: onAddNote },
-          { key: "whatdidntgosowell", text: "What didn't go so well", onClick: onAddNote },
-          { key: "whatcanweimprove", text: "What can we improve", onClick: onAddNote },
+          { key: "whatwentwell", text: "What went well", onClick: () => onAddNote("left") },
+          { key: "whatdidntgosowell", text: "What didn't go so well", onClick: () => onAddNote("middle") },
+          { key: "whatcanweimprove", text: "What can we improve", onClick: () => onAddNote("right") },
         ],
       }
     },

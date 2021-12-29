@@ -1,11 +1,9 @@
-import { IStyle, mergeStyles, Text, Theme, ThemeProvider } from "@fluentui/react";
+import { Theme } from "@fluentui/react";
 import { AzureMember } from "@fluidframework/azure-client";
 import React from "react";
-import { useDrop } from 'react-dnd';
-import { NoteData, Position } from "../Types";
-import { Note } from "./Note";
+import { NoteData } from "../Types";
 import { RetrospectiveModel } from "../RetrospectiveModel";
-import { lightTheme } from './Themes';
+import { Column } from './Column';
 
 export type NoteSpaceProps = Readonly<{
   author: AzureMember;
@@ -41,85 +39,11 @@ export function NoteSpace(props: NoteSpaceProps) {
     }
   }, [model, props.author]);
 
-  const rootStyle: IStyle = {
-    borderRadius: "2px",
-    display: "flex",
-    height: "100vh",
-    margin: "10px",
-    position: "relative"
-  };
-  const spaceClass = mergeStyles(rootStyle);
-
-  const [, drop] = useDrop(() => ({
-    accept: 'note',
-    drop(item: any, monitor) {
-      const delta = monitor.getDifferenceFromInitialOffset()!;
-      const left = Math.round(item.left + delta.x);
-      const top = Math.round(item.top + delta.y);
-      model.MoveNote(item.id, {
-        x: left > 0 ? left : 0,
-        y: top > 0 ? top : 0
-      })
-      return undefined;
-    },
-  }), [model]);
-
   return (
-    <div className={spaceClass}>
-      <div className="leftBoard">
-        <Text variant="xLarge">What went well?</Text>
-      </div>
-      <div className="middleBoard">
-        <Text variant="xLarge">What went wrong?</Text>
-      </div>
-      <div className="rightBoard">
-        <Text variant="xLarge">What can we improve?</Text>
-      </div>
-      <ThemeProvider theme={lightTheme} id="NoteSpace" ref={drop}>
-        {notes.map((note, i) => {
-          const setPosition = (position: Position) => {
-            model.MoveNote(note.id, position);
-          };
-
-          const setText = (text: string) => {
-            model.SetNoteText(note.id, text, props.author.userId, props.author.userName, Date.now());
-          };
-
-          const onLike = () => {
-            model.LikeNote(note.id, props.author);
-          };
-
-          const getLikedUsers = () => {
-            return model.GetNoteLikedUsers(note.id);
-          };
-
-          const onDelete = () => {
-            model.DeleteNote(note.id);
-          };
-
-          const onColorChange = (color: string) => {
-            model.SetNoteColor(note.id, color);
-          };
-
-          return (
-            <Note
-              {...note}
-              id={note.id}
-              currentUser={props.author}
-              lastEdited={note.lastEdited}
-              author={note.author}
-              key={note.id}
-              text={note.text}
-              setPosition={setPosition}
-              onLike={onLike}
-              getLikedUsers={getLikedUsers}
-              onDelete={onDelete}
-              onColorChange={onColorChange}
-              setText={setText}
-            />
-          );
-          })}
-      </ThemeProvider>
+    <div className="board">
+      <Column author={props.author} model={props.model} notes={notes.filter(n => n.position === "left")} position="left" />
+      <Column author={props.author} model={props.model} notes={notes.filter(n => n.position === "middle")} position="middle" />
+      <Column author={props.author} model={props.model} notes={notes.filter(n => n.position === "right")} position="right" />
     </div>
   );
 }
