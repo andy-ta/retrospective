@@ -1,8 +1,8 @@
 import {
-  mergeStyles,
+  mergeStyles, Theme,
 } from "@fluentui/react";
 import { AzureMember } from "@fluidframework/azure-client";
-import React from "react";
+import React, { useState } from "react";
 import { useDrag } from "react-dnd";
 import { DefaultColor } from "./Color";
 import {
@@ -12,10 +12,12 @@ import { NoteData, Position } from "../Types";
 import { NoteHeader } from "./NoteHeader";
 import { NoteBody } from "./NoteBody";
 import { NoteFooter } from "./NoteFooter";
+import { DefaultTheme } from './Themes';
 
 export type NoteProps = Readonly<{
   id: string;
   currentUser: AzureMember;
+  theme: Theme;
   setPosition: (position: Position) => void;
   onLike: () => void;
   getLikedUsers: () => AzureMember[];
@@ -51,7 +53,7 @@ export function Note(props: NoteProps) {
     [id, position]
   );
 
-  const rootClass = mergeStyles(getRootStyleForColor(color));
+  const rootClass = mergeStyles(getRootStyleForColor(color, props.theme));
 
   // hash the id then use it as a seed to pick a random rotation
   const getRotation = (noteId: string): string => {
@@ -78,7 +80,7 @@ export function Note(props: NoteProps) {
   return (
     <div className={rootClass} ref={drag} style={styles}>
       <NoteHeader {...props} />
-      <NoteBody setText={setText} text={text} color={color} />
+      <NoteBody setText={setText} text={text} color={color} theme={props.theme} />
       <NoteFooter />
     </div>
   );

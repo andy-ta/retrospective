@@ -41,9 +41,9 @@ export function NoteSpace(props: NoteSpaceProps) {
 
   return (
     <div className="board">
-      <Column author={props.author} model={props.model} notes={notes.filter(n => n.position === "left")} position="left" />
-      <Column author={props.author} model={props.model} notes={notes.filter(n => n.position === "middle")} position="middle" />
-      <Column author={props.author} model={props.model} notes={notes.filter(n => n.position === "right")} position="right" />
+      <Column author={props.author} model={props.model} notes={notes.filter(n => n.position === "left")} theme={props.theme} position="left" />
+      <Column author={props.author} model={props.model} notes={notes.filter(n => n.position === "middle")} theme={props.theme} position="middle" />
+      <Column author={props.author} model={props.model} notes={notes.filter(n => n.position === "right")} theme={props.theme} position="right" />
     </div>
   );
 }

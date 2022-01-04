@@ -1,4 +1,4 @@
-import { IRawStyle, IStyle, ITooltipHostStyles, IButtonStyles } from '@fluentui/react';
+import { IRawStyle, IStyle, ITooltipHostStyles, IButtonStyles, Theme } from '@fluentui/react';
 import { ColorOptions } from "./Color";
 import { ColorId } from "../Types";
 
@@ -41,9 +41,9 @@ export const likesButtonStyle: IButtonStyles = {
   iconHovered: { fontSize: "18px" }
 };
 
-export function getRootStyleForColor(color: ColorId): IStyle {
+export function getRootStyleForColor(color: ColorId, theme: Theme): IStyle {
   return {
-    background: ColorOptions[color].light,
+    background: ColorOptions[color][theme.isInverted ? "dark" : "light"],
     borderRadius: "2px",
     boxShadow:
       "rgb(0 0 0 / 13%) 0px 1.6px 3.6px 0px, rgb(0 0 0 / 11%) 0px 0.3px 0.9px 0px",

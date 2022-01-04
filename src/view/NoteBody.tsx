@@ -1,9 +1,10 @@
 import React from "react";
-import { TextField } from "@fluentui/react";
+import { TextField, Theme } from "@fluentui/react";
 import { NoteData } from "../Types";
 import { ColorOptions, DefaultColor } from "./Color";
 
 export type NoteBodyProps = Readonly<{
+  theme: Theme
   setText(text: string): void;
 }> &
   Pick<NoteData, "text" | "color">;
@@ -14,7 +15,7 @@ export function NoteBody(props: NoteBodyProps) {
   return (
     <div style={{ flex: 1 }}>
       <TextField
-        styles={{ fieldGroup: { background: ColorOptions[color].light } }}
+        styles={{ fieldGroup: { background: ColorOptions[color][props.theme.isInverted ? "dark" : "light"] } }}
         borderless
         multiline
         resizable={false}

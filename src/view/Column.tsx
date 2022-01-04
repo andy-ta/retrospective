@@ -1,6 +1,5 @@
-import { Text, ThemeProvider } from "@fluentui/react";
+import { Text, Theme } from "@fluentui/react";
 import { NoteData, Position } from '../Types';
-import { lightTheme } from './Themes';
 import { Note } from './Note';
 import React from 'react';
 import { AzureMember } from '@fluidframework/azure-client';
@@ -11,7 +10,8 @@ export type ColumnProps = Readonly<{
   author: AzureMember,
   model: RetrospectiveModel,
   notes: Readonly<NoteData[]>,
-  position: Position
+  position: Position,
+  theme: Theme
 }>;
 
 export function Column(props: ColumnProps) {
@@ -46,9 +46,9 @@ export function Column(props: ColumnProps) {
   }
 
   return (
-    <div className={getClass()}>
+    <div className={getClass()} ref={drop}>
       <Text variant="xLarge">{getTitle()}</Text>
-        <ThemeProvider theme={lightTheme} className="noteSpace" ref={drop}>
+        <div className="noteSpace">
           {props.notes.map(note => {
             const setPosition = (position: Position) => {
               props.model.MoveNote(note.id, position);
@@ -83,6 +83,7 @@ export function Column(props: ColumnProps) {
                 author={note.author}
                 key={note.id}
                 text={note.text}
+                theme={props.theme}
                 setPosition={setPosition}
                 onLike={onLike}
                 getLikedUsers={getLikedUsers}
@@ -92,7 +93,7 @@ export function Column(props: ColumnProps) {
               />
             );
           })}
-        </ThemeProvider>
+        </div>
     </div>
   );
 }

@@ -14,7 +14,7 @@ export const ColorOrder: ColorId[] = [
 export const DefaultColor = ColorOrder[0];
 
 export const ColorOptions: { [key in ColorId]: ColorValues } = {
-  Yellow: { base: "#F2C811", dark: "#FAE9A0", light: "#FCF4CF" },
+  Yellow: { base: "#F2C811", dark: "#EBD77C", light: "#FCF4CF" },
   Blue: { base: "#0078D4", dark: "#99C9EE", light: "#CCE4F6" },
   Green: { base: "#005E50", dark: "#99BFB9", light: "#CCDFDC" },
   Pink: { base: "#E3008C", dark: "#F499D1", light: "#F9CCE8" },
