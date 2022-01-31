@@ -1,11 +1,11 @@
-import React from "react";
-import { TextField, Theme } from "@fluentui/react";
-import { NoteData } from "../Types";
-import { ColorOptions, DefaultColor } from "./Color";
+import React from 'react';
+import { TextField, Theme } from '@fluentui/react';
+import { NoteData } from '../Types';
+import { ColorOptions, DefaultColor } from './Color';
 
 export type NoteBodyProps = Readonly<{
   theme: Theme
-  setText(text: string): void;
+  setText(event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>): void;
 }> &
   Pick<NoteData, "text" | "color">;
 
@@ -20,7 +20,7 @@ export function NoteBody(props: NoteBodyProps) {
         multiline
         resizable={false}
         autoAdjustHeight
-        onChange={(event) => setText(event.currentTarget.value)}
+        onChange={(event) => setText(event)}
         value={text}
         placeholder={"Enter Text Here"}
       />

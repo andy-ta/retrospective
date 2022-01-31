@@ -1,14 +1,14 @@
-import { IFluidContainer, ISharedMap, SharedMap } from "fluid-framework";
-import { AzureMember } from "@fluidframework/azure-client";
-import { NoteData, Position } from "./Types";
+import { AzureMember } from '@fluidframework/azure-client';
+import { IFluidContainer, ISharedMap, SharedMap } from 'fluid-framework';
+import { NoteData, Position } from './Types';
 
-const c_NoteIdPrefix = "noteId_";
-const c_PositionPrefix = "position_";
-const c_AuthorPrefix = "author_";
-const c_LastEditedPrefix = "lastEdited_";
-const c_votePrefix = "vote_";
-const c_TextPrefix = "text_";
-const c_ColorPrefix = "color_";
+const c_NoteIdPrefix = 'noteId_';
+const c_PositionPrefix = 'position_';
+const c_AuthorPrefix = 'author_';
+const c_LastEditedPrefix = 'lastEdited_';
+const c_votePrefix = 'vote_';
+const c_TextPrefix = 'text_';
+const c_ColorPrefix = 'color_';
 
 export type RetrospectiveModel = Readonly<{
   CreateNote(noteId: string, myAuthor: AzureMember): NoteData;
@@ -47,12 +47,16 @@ export function createRetrospectiveModel(fluid: IFluidContainer): RetrospectiveM
 
   // when setting the note text in the sharedMap with the new value, also update the last edited author name and time.
   const SetNoteText = (noteId: string, noteText: string, lastEditedId: string, lastEditedName: string, lastEditedTime: number) => {
-    // update the note's text in sharedMap
-    sharedMap.set(c_TextPrefix + noteId, noteText);
-    // update the note's last edited author name and timestamp
-    // WARNING: sharedMap does not preserve object references in the DDS map the same way it would be in a conventional map data structure.
-    // Hence, instead of storing the entire AzureMember object, we are only storing the necessary primitive data types metadata.
-    sharedMap.set(c_LastEditedPrefix + noteId, { userId: lastEditedId, userName: lastEditedName, time: lastEditedTime });
+    const characterLimit = 300;
+    // Check character limit but allow new notes.
+    if (!noteText || (noteText.length < characterLimit)) {
+      // update the note's text in sharedMap
+      sharedMap.set(c_TextPrefix + noteId, noteText);
+      // update the note's last edited author name and timestamp
+      // WARNING: sharedMap does not preserve object references in the DDS map the same way it would be in a conventional map data structure
+      // Hence, instead of storing the entire AzureMember object, we are only storing the necessary primitive data types metadata.
+      sharedMap.set(c_LastEditedPrefix + noteId, {userId: lastEditedId, userName: lastEditedName, time: lastEditedTime});
+    }
   };
 
   const SetNoteColor = (noteId: string, noteColor: string) => {
