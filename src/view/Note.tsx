@@ -1,18 +1,13 @@
-import {
-  mergeStyles, Theme,
-} from "@fluentui/react";
-import { AzureMember } from "@fluidframework/azure-client";
-import React, { useState } from "react";
-import { useDrag } from "react-dnd";
-import { DefaultColor } from "./Color";
-import {
-  getRootStyleForColor
-} from "./Note.style";
-import { NoteData, Position } from "../Types";
-import { NoteHeader } from "./NoteHeader";
-import { NoteBody } from "./NoteBody";
-import { NoteFooter } from "./NoteFooter";
-import { DefaultTheme } from './Themes';
+import { mergeStyles, Theme, } from '@fluentui/react';
+import { AzureMember } from '@fluidframework/azure-client';
+import React from 'react';
+import { useDrag } from 'react-dnd';
+import { DefaultColor } from './Color';
+import { getRootStyleForColor } from './Note.style';
+import { NoteData, Position } from '../Types';
+import { NoteHeader } from './NoteHeader';
+import { NoteBody } from './NoteBody';
+import { NoteFooter } from './NoteFooter';
 
 export type NoteProps = Readonly<{
   id: string;
@@ -23,7 +18,7 @@ export type NoteProps = Readonly<{
   getLikedUsers: () => AzureMember[];
   onDelete: () => void;
   onColorChange: (color: string) => void;
-  setText: (text: string) => void;
+  setText: (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }> &
   Pick<
     NoteData,

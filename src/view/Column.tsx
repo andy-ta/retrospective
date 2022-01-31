@@ -1,4 +1,4 @@
-import { Text, Theme } from "@fluentui/react";
+import { Text, Theme } from '@fluentui/react';
 import { NoteData, Position } from '../Types';
 import { Note } from './Note';
 import React from 'react';
@@ -54,8 +54,15 @@ export function Column(props: ColumnProps) {
               props.model.MoveNote(note.id, position);
             };
 
-            const setText = (text: string) => {
-              props.model.SetNoteText(note.id, text, props.author.userId, props.author.userName, Date.now());
+            const setText = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+              const maxNoteBodyHeight = 182;
+              const currentText = note.text;
+              const newText = event.currentTarget.value;
+              // Prevent note from expanding vertically (is the text at the max height yet?), but allow deleting text.
+              if (event.currentTarget.offsetHeight < maxNoteBodyHeight || (currentText && (newText.length < currentText.length))) {
+                console.log(event.currentTarget.offsetHeight);
+                props.model.SetNoteText(note.id, event.currentTarget.value, props.author.userId, props.author.userName, Date.now());
+              }
             };
 
             const onLike = () => {
