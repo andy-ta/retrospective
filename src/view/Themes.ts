@@ -55,6 +55,10 @@ export const darkTheme = createTheme({
     black: "#f8f8f8",
     white: "#000000",
   },
+  semanticColors: {
+    inputPlaceholderText: "#a2a1a0",
+    inputText: "#30302f"
+  }
 });
 
 export function themeNameToTheme(themeName: ThemeName) {

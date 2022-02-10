@@ -11,7 +11,7 @@ import {
   getHeaderStyleForColor,
   deleteButtonStyle,
   colorButtonStyle,
-  likesButtonStyle,
+  getLikesButtonStyle,
 } from "./Note.style";
 import { NoteProps } from "./Note"
 
@@ -53,7 +53,7 @@ const HeaderComponent = (props: NoteProps) => {
       iconProps: {
         iconName: props.didILikeThisCalculated ? "LikeSolid" : "Like",
       },
-      buttonStyles: likesButtonStyle,
+      buttonStyles: getLikesButtonStyle(props.theme),
       commandBarButtonAs: (props) => {
         return (
           <CommandBarButton {...(props as any)} />

@@ -34,12 +34,14 @@ export const colorButtonStyle: IButtonStyles = {
   iconExpanded: { fontSize: "18px" }
 };
 
-export const likesButtonStyle: IButtonStyles = {
-  root: { backgroundColor: "transparent" },
-  rootHovered: { backgroundColor: "transparent", fontSize: "18px" },
-  rootPressed: { backgroundColor: "transparent" },
-  iconHovered: { fontSize: "18px" }
-};
+export function getLikesButtonStyle(theme: Theme) {
+  return {
+    root: { backgroundColor: "transparent", color: theme.palette.themeDark },
+    rootHovered: { backgroundColor: "transparent", fontSize: "18px", color: theme.palette.themeDark },
+    rootPressed: { backgroundColor: "transparent", color: theme.palette.themeDark },
+    iconHovered: { fontSize: "18px" }
+  };
+}
 
 export function getRootStyleForColor(color: ColorId, theme: Theme): IStyle {
   return {
