@@ -124,19 +124,6 @@ export function Header(props: HeaderProps) {
           With <strong>{ props.members.length - 1 }</strong> other { props.members.length - 1 === 1 ? 'person' : 'people' }
         </Text>
       ),
-    },
-    {
-      key: 'ko-fi',
-      onRender: () => (
-        <Link
-          href="https://ko-fi.com/A0A87FYC1"
-          target='_blank'
-          styles={{
-            root: { alignSelf: "center", marginRight: 16 },
-          }}>
-          Buy Me a Coffee
-        </Link>
-      )
     }
   ];
   return (
