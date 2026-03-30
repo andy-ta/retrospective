@@ -67,7 +67,7 @@ export async function start() {
   log(`Container connected state: ${container!.connected}`);
 
   // Listen to all container events for debugging
-  const containerEvents = ["connected", "disconnected", "dirty", "saved", "disposed"];
+  const containerEvents = ["connected", "disconnected", "dirty", "saved", "dispose"];
   containerEvents.forEach(evt => {
     container!.on(evt as any, () => log(`Container event: "${evt}"`));
   });
@@ -93,7 +93,7 @@ export async function start() {
       container!.once("disconnected", () => {
         log("Container disconnected while waiting for connection");
       });
-      container!.once("disposed", () => {
+      container!.once("dispose", () => {
         clearTimeout(timeout);
         logError("Container was disposed while waiting for connection");
         reject(new Error("Container was disposed before connecting."));
