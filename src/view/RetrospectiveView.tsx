@@ -25,19 +25,45 @@ export const RetrospectiveView = (props: RetrospectiveViewProps) => {
   // set the user as the author so the user can be assigned as the author when needed
   const [authorInfo, setAuthorInfo] = React.useState(audience.getMyself());
   const setTheme = props.setTheme;
+
   const updateMembers = React.useCallback(() => {
     setMembers(Array.from(audience.getMembers().values()));
-    setAuthorInfo(audience.getMyself());
+    const myself = audience.getMyself();
+    if (myself !== undefined) {
+      setAuthorInfo(myself);
+    }
   }, [audience]);
+
   // Setup a listener to update our users when new clients join the session
   React.useEffect(() => {
     container.on("connected", updateMembers);
     audience.on("membersChanged", updateMembers);
+    // Also listen to memberAdded — getMyself() may return undefined until
+    // the audience processes the addMember event for our own clientId.
+    audience.on("memberAdded", updateMembers);
+    // If authorInfo is still undefined, poll briefly — the audience may
+    // populate asynchronously after the container "connected" event.
+    let pollTimer: ReturnType<typeof setInterval> | undefined;
+    if (authorInfo === undefined) {
+      pollTimer = setInterval(() => {
+        const myself = audience.getMyself();
+        if (myself !== undefined) {
+          setAuthorInfo(myself);
+          setMembers(Array.from(audience.getMembers().values()));
+          clearInterval(pollTimer!);
+          pollTimer = undefined;
+        }
+      }, 100);
+    }
     return () => {
       container.off("connected", updateMembers);
       audience.off("membersChanged", updateMembers);
+      audience.off("memberAdded", updateMembers);
+      if (pollTimer !== undefined) {
+        clearInterval(pollTimer);
+      }
     };
-  }, [container, audience, updateMembers]);
+  }, [container, audience, updateMembers, authorInfo]);
 
   const wrapperClass = mergeStyles({
     height: "100%",
