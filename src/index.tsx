@@ -17,7 +17,7 @@ const logError = (msg: string, ...args: any[]) => {
 };
 
 export async function start() {
-  initializeIcons();
+  initializeIcons("https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/assets/icons/");
   log("Starting retrospective app");
   log("Connection config:", JSON.stringify(connectionConfig, null, 2));
 
