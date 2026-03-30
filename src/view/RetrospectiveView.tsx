@@ -23,22 +23,21 @@ export const RetrospectiveView = (props: RetrospectiveViewProps) => {
   // retrieve all the members currently in the session
   const [members, setMembers] = React.useState(Array.from(audience.getMembers().values()));
   // set the user as the author so the user can be assigned as the author when needed
-  const authorInfo = audience.getMyself();
+  const [authorInfo, setAuthorInfo] = React.useState(audience.getMyself());
   const setTheme = props.setTheme;
-  const setMembersCallback = React.useCallback(() => setMembers(
-    Array.from(
-      audience.getMembers().values()
-    )
-  ), [setMembers, audience]);
+  const updateMembers = React.useCallback(() => {
+    setMembers(Array.from(audience.getMembers().values()));
+    setAuthorInfo(audience.getMyself());
+  }, [audience]);
   // Setup a listener to update our users when new clients join the session
   React.useEffect(() => {
-    container.on("connected", setMembersCallback);
-    audience.on("membersChanged", setMembersCallback);
+    container.on("connected", updateMembers);
+    audience.on("membersChanged", updateMembers);
     return () => {
-      container.off("connected", () => setMembersCallback);
-      audience.off("membersChanged", () => setMembersCallback);
+      container.off("connected", updateMembers);
+      audience.off("membersChanged", updateMembers);
     };
-  }, [container, audience, setMembersCallback]);
+  }, [container, audience, updateMembers]);
 
   const wrapperClass = mergeStyles({
     height: "100%",
