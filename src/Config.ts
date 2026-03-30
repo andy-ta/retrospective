@@ -4,8 +4,14 @@ import { getRandomName } from "@fluidframework/server-services-client";
 import { v4 as uuid } from 'uuid';
 import { InsecureTokenProvider } from "@fluidframework/test-client-utils";
 
+// Runtime config injected by config.js (written at container startup)
+const runtimeConfig = (window as any).__CONFIG__ || {};
+
 export const useAzure = process.env.REACT_APP_FLUID_CLIENT === "azure";
 export const key: string = process.env.REACT_APP_FLUID_KEY as string;
+
+const fluidOrderer: string = runtimeConfig.FLUID_ORDERER || "http://localhost:7070";
+const fluidStorage: string = runtimeConfig.FLUID_STORAGE || "http://localhost:7070";
 
 export const containerSchema = {
   initialObjects: {
@@ -26,6 +32,6 @@ export const connectionConfig: AzureClientProps = useAzure ? { connection: {
   }} : { connection: {
     tenantId: LOCAL_MODE_TENANT_ID,
     tokenProvider: new InsecureTokenProvider("fooBar", userConfig),
-    orderer: "http://localhost:7070",
-    storage: "http://localhost:7070",
+    orderer: fluidOrderer,
+    storage: fluidStorage,
   }} ;
